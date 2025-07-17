@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+//Grade Calculator
 func main(){
 	reader:=bufio.NewReader(os.Stdin)
 	fmt.Print("Enter Your Name : ")
