@@ -1,7 +1,6 @@
-package middleware
+package infrastructure
 
 import (
-	"log"
 	"net/http"
 	"strings"
 
@@ -19,7 +18,8 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 		tokenStr:=strings.TrimPrefix(authHeader,"Bearer")
-		log.Println("***********-->",tokenStr)
+
+
 		token,err:=jwt.Parse(tokenStr,func(token *jwt.Token) (interface{}, error) {
 			return jwtKey, nil
 		})
@@ -29,6 +29,8 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 		claims,_:=token.Claims.(jwt.MapClaims)
+
+		
 		c.Set("username",claims["username"])
 		c.Set("role",claims["role"])
 

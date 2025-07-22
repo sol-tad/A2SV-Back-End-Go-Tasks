@@ -1,9 +1,8 @@
 package router
 
 import (
-	"task_manager/controllers"
-	"task_manager/middleware"
-
+	"task_manager/Delivery/controllers"
+	"task_manager/Infrastructure"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,13 +11,13 @@ func SetupRouter() *gin.Engine{
 	r.POST("/login",controllers.Login)
 	r.POST("/register",controllers.Register)
 
-	auth:=r.Group("/",middleware.AuthMiddleware())
+	auth:=r.Group("/",infrastructure.AuthMiddleware())
 	{
 		auth.POST("/tasks",controllers.CreateTask)
 		auth.GET("/tasks",controllers.GetTasks)
 		auth.GET("/tasks/:id",controllers.GetTaskByID)
 		auth.PUT("/task/:id",controllers.UpdateTask)
-		auth.DELETE("/task/:id",middleware.AdminOnly(),controllers.DeleteTask)
+		auth.DELETE("/task/:id",infrastructure.AdminOnly(),controllers.DeleteTask)
 	}
 
 
